@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace的值就是dao接口的完整路劲，就这个demo而言namespace 就是*Dao.java的完整路劲 -->
+<mapper namespace="com.learn.dao.FilesDao">
+	<!--通过<resultMap>映射实体类属性名和表的字段名对应关系 -->
+	<resultMap type="com.learn.model.Files" id="filesMap">
+		<!-- 用id属性来映射主键字段 -->
+		<id property="id" column="id" />
+		<!-- 用result属性来映射非主键字段 -->
+		<result property="userId" column="user_id" />
+		<result property="userName" column="user_name" />
+		<result property="fileDescription" column="file_description" />
+		<result property="fileType" column="file_type" />
+		<result property="filePath" column="file_path" />
+		<result property="fileDzone" column="file_dzone" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="shrinkagePath" column="shrinkage_path"/>
+	</resultMap>
+	<!-- 这里的id就是接口中方法的名称 -->
+	<insert id="insertFile" parameterType="com.learn.model.Files">
+		INSERT INTO t_files
+		(user_id,user_name,file_description,file_type,file_path,create_time,update_time,shrinkage_path)
+		VALUES
+		(#{userId},#{userName},#{fileDescription},#{fileType},#{filePath},#{createTime},#{createTime},#{shrinkagePath});
+	</insert>
+	<select id="getAllFiles" resultMap="filesMap">
+		select * from t_files
+	</select>
+</mapper>  

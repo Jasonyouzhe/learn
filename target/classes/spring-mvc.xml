@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                          http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd 
+                          http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd 
+                          http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+                          http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
+
+
+
+	<!-- 注册HandlerMapper、HandlerAdapter两个映射类 -->
+	<mvc:annotation-driven />
+	<!-- 配置扫描的包 -->
+	<context:component-scan base-package="com.learn.controller" />
+	<!-- 静态资源配置 -->
+	<!-- <mvc:resources location="/resources/" mapping="/resources/**"></mvc:resources> -->
+	<mvc:resources location="/resources/js" mapping="/js/**" />
+	<mvc:resources location="/resources/css" mapping="/css/**" />
+	<mvc:resources location="/resources/img" mapping="/img/**" />
+	<mvc:resources location="/resources/images" mapping="/images/**" />
+	<mvc:resources location="/resources/font-awesome"
+		mapping="/font-awesome/**" />
+	<mvc:default-servlet-handler />
+	<!-- 配置拦截器 -->
+	<mvc:interceptors>
+		<!-- 配置登陆拦截器 -->
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<bean class="com.learn.util.BasePathInterceptor"></bean>
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/user/**" />
+			<bean class="com.learn.util.LoginHandlerIntercepter"></bean>
+		</mvc:interceptor>
+	</mvc:interceptors>
+	<!-- <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"> 
+		<property name="prefix" value="/WEB-INF/views/" /> <property name="suffix" 
+		value=".jsp" /> </bean> -->
+
+	<!-- 配置文件上传，如果没有使用文件上传可以不用配置，但不配的时候配置文件中也不必引入上传组件包 -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- 默认编码 -->
+		<property name="defaultEncoding" value="utf-8"></property>
+		<!-- 文件大小最大值 -->
+		<property name="maxUploadSize" value="10485760000"></property>
+		<property name="maxInMemorySize" value="40960"></property>
+	</bean>
+	<!-- 视图解析器 -->
+	<bean id="propertySetting"
+		class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="locations">
+			<list>
+				<value>classpath*:freemarker.properties</value>
+			</list>
+		</property>
+	</bean>
+	<bean id="freemarkerConfig"
+		class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+		<property name="templateLoaderPath" value="/WEB-INF/ftl/"></property>
+		<property name="freemarkerSettings" ref="propertySetting"></property>
+	</bean>
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+		<property name="exposeRequestAttributes" value="true"></property>
+		<property name="exposeSessionAttributes" value="true"></property>
+		<property name="allowSessionOverride" value="true"></property>
+		<property name="requestContextAttribute" value="request" />
+		<property name="exposeSpringMacroHelpers" value="true" />
+		<!-- <property name="allowRequestOverride" value="true"></property> -->
+		<property name="order" value="1"></property>
+		<property name="cache" value="true"></property>
+		<property name="suffix" value=".ftl"></property>
+		<property name="contentType" value="text/html;charset=UTF-8"></property>
+		<property name="viewClass">
+			<!-- <value>org.springframework.web.servlet.view.freemarker.FreeMarkerView</value> -->
+			<!-- 自定义FreeMarkerView，用来定义项目的全局路径 -->
+			<value>com.learn.util.MyFreeMarkerView</value>
+		</property>
+	</bean>
+	<!-- <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"> 
+		<property name="contentType" value="text/html;charset=UTF-8"></property> 
+		<property name="prefix" value="/WEB-INF/views/"></property> <property name="suffix" 
+		value=".html"></property> </bean> -->
+	<!-- springmvc提供的简单异常处理器 -->
+	<bean
+		class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<property name="exceptionMappings">
+			<props>
+			<!-- 表示当抛出NumberFormatException的时候就返回名叫error2的视图 -->
+				<prop key="SQLException">sqlexception</prop>
+			</props>
+		</property>
+		<!-- 表示当抛出异常但没有在exceptionMappings里面找到对应的异常时返回名叫exception的视图 -->
+		<property name="defaultErrorView" value="exception" />
+	</bean>
+</beans>
