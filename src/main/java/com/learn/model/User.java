@@ -1,6 +1,7 @@
 package com.learn.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class User implements Serializable {
 	/**
@@ -13,7 +14,16 @@ public class User implements Serializable {
 	private String photoPath;
 	private String password;
 	private int userDzone;
+	private List<Role> roles;
 	
+	public List<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
+	}
+
 	public String getUserId() {
 		return userId;
 	}

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.learn.dao.UserDao;
+import com.learn.model.Role;
 import com.learn.model.User;
 import com.learn.service.UserService;
 
@@ -38,7 +39,9 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User getUserById(Integer id) {
-		return userDao.getUserById(id);
+		User user= null;
+		user= userDao.getUserById(id);
+		return user;
 	}
 
 	@Override
@@ -52,8 +55,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User getUserByName(String userName,String password) {
-		return userDao.getUserByName(userName,password);
+	public User getUserByName(String userName) {
+		return userDao.getUserByName(userName);
 	}
 
 	@Override
@@ -66,6 +69,12 @@ public class UserServiceImpl implements UserService {
 			return "No." + userNo;
 		}
 		return userNo+"";
+	}
+
+	@Override
+	public Role getUserRoleById(Integer id) {
+		
+		return userDao.getUserRoleById(id);
 	}
 
 //	@Override

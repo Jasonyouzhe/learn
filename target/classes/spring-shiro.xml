@@ -13,7 +13,7 @@
 
 
 	<!-- 继承自AuthorizingRealm的自定义Realm,即指定Shiro验证用户登录的类为自定义的ShiroDbRealm.java -->
-	<bean id="myRealm" class="com.papio.realm.MyRealm" />
+	<bean id="myRealm" class="com.learn.shiro.MyRealm" />
 	<!-- 定义缓存管理器 -->
 	<bean id="cacheManager" class="org.apache.shiro.cache.MemoryConstrainedCacheManager" />
 	<bean id="sessionManager"
@@ -50,11 +50,7 @@
 		<!-- authc：该过滤器下的页面必须验证后才能访问,它是Shiro内置的一个拦截器org.apache.shiro.web.filter.authc.FormAuthenticationFilter -->
 		<property name="filterChainDefinitions">
 			<value>
-				/mydemo/login=anon
-				/mydemo/getVerifyCodeImage=anon
-				/main**=authc
-				/user/info**=authc
-				/admin/listUser**=authc,perms[admin:manage]
+				/**=anon
 			</value>
 		</property>
 	</bean>

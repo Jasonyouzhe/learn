@@ -15,7 +15,34 @@
 		<result property="photoPath" column="photo_path" />
 		<result property="userDzone" column="user_dzone" />
 	</resultMap>
+	
+	<!-- get userRole start 20171216-->
+	<resultMap type="com.learn.model.User" id="resultUserRole">
+		<id property="id" column="id" />
+		<result property="userName" column="user_name" />
+		<collection property="roles" column="id" javaType="java.util.ArrayList"
+		ofType="com.learn.model.Role" select="com.learn.dao.mappers.UserMapper.getUserRoleById"/>
+	</resultMap>
+	
+	<resultMap type="com.learn.model.Role" id="resultRoleMap">
+		<id property="id" column="id" />
+		<result property="roleName" column="role_name" />
+		<result property="roleDescription" column="role_description" />
+	</resultMap>
+	
+	<select id="getUserByID" resultMap="resultUserRole" parameterType="java.lang.Integer" >
+	    select id,userName
+	    from t_user
+	    where id = #{id}
+	</select>
 
+	<select id="getUserRoleById" resultMap="resultRoleMap" parameterType="java.lang.Integer" >
+	    select r.*
+	    from t_role r ,t_user_role ur
+	    where r.id = ur.role_id and ur.user_id=#{id}
+	</select>
+	<!-- get userRole end 20171226-->
+	
 	<!-- 这里的id就是接口中方法的名称 -->
 	<insert id="saveUser" parameterType="com.learn.model.User">
 		insert into t_user(user_id,user_name,password)values(#{userId},#{userName},#{password})
@@ -39,6 +66,6 @@
 		photo_path=#{photoPath} where id=#{id}
 	</update>
 	<select id="getUserByName" parameterType="string" resultMap="userMap">
-		select * from t_user where user_name=#{userName} and password=#{password}
+		select * from t_user where user_name=#{userName}
 	</select>
 </mapper>  
