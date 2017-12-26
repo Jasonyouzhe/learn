@@ -60,7 +60,7 @@ CREATE TABLE `t_permissions` (
   `permissions_name` varchar(45) NOT NULL,
   `permissions_description` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -69,6 +69,7 @@ CREATE TABLE `t_permissions` (
 
 LOCK TABLES `t_permissions` WRITE;
 /*!40000 ALTER TABLE `t_permissions` DISABLE KEYS */;
+INSERT INTO `t_permissions` VALUES (1,'create','创建'),(2,'delete','删除'),(3,'update','更新'),(4,'select','查询');
 /*!40000 ALTER TABLE `t_permissions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -85,7 +86,7 @@ CREATE TABLE `t_role` (
   `role_description` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -94,7 +95,33 @@ CREATE TABLE `t_role` (
 
 LOCK TABLES `t_role` WRITE;
 /*!40000 ALTER TABLE `t_role` DISABLE KEYS */;
+INSERT INTO `t_role` VALUES (1,'admin','admin'),(2,'manage','管理员'),(3,'user','普通用户');
 /*!40000 ALTER TABLE `t_role` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `t_role_permissions`
+--
+
+DROP TABLE IF EXISTS `t_role_permissions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `t_role_permissions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `role_id` varchar(45) NOT NULL,
+  `permissions_id` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `t_role_permissions`
+--
+
+LOCK TABLES `t_role_permissions` WRITE;
+/*!40000 ALTER TABLE `t_role_permissions` DISABLE KEYS */;
+INSERT INTO `t_role_permissions` VALUES (1,'1','1'),(2,'1','2'),(3,'1','3'),(4,'1','4'),(5,'2','1'),(6,'2','3'),(7,'2','4'),(8,'3','1');
+/*!40000 ALTER TABLE `t_role_permissions` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -137,7 +164,7 @@ CREATE TABLE `t_user_role` (
   `user_id` varchar(45) NOT NULL,
   `role_id` varchar(45) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -146,6 +173,7 @@ CREATE TABLE `t_user_role` (
 
 LOCK TABLES `t_user_role` WRITE;
 /*!40000 ALTER TABLE `t_user_role` DISABLE KEYS */;
+INSERT INTO `t_user_role` VALUES (1,'1','1'),(2,'2','2'),(3,'3','3'),(4,'6','3'),(5,'8','3');
 /*!40000 ALTER TABLE `t_user_role` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -158,4 +186,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-12-25 17:12:04
+-- Dump completed on 2017-12-26 17:31:34
