@@ -7,6 +7,9 @@ import javax.servlet.http.HttpSession;
 import org.apache.ibatis.javassist.expr.NewArray;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authz.Permission;
+import org.apache.shiro.authz.annotation.RequiresRoles;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -38,18 +41,13 @@ public class LoginController {
 	 * @return
 	 * @throws Exception
 	 */
+	@RequiresRoles("admin")
 	@RequestMapping("/login")
 	public String login(HttpServletRequest request, Model model) throws Exception {
 		String userName = request.getParameter("username");
 		String password = request.getParameter("password");
 		String flag = request.getParameter("f");
 		User user = null;
-//		Role role = userService.getUserRoleById(1);
-	    user = userService.getUserById(1);
-		if (user != null) {
-			System.out.println(user.getUserName());
-			System.out.println(user.getRoles().get(0).getRoleName());
-		}
 		if (flag.equals("register")){
 			try {
 				if (!userService.getUserId().isEmpty()) {
@@ -66,6 +64,7 @@ public class LoginController {
 		UsernamePasswordToken token = new UsernamePasswordToken(userName, password);
         //获取当前的Subject  
         Subject subject = SecurityUtils.getSubject();
+        System.out.println(subject.hasRole("admin"));
         //token.setRememberMe(true);  
         System.out.println("对用户[" + userName + "]进行登录验证..验证开始"); 
         //这一步在调用login(token)方法时,它会走到MyRealm.doGetAuthenticationInfo()方法中,具体验证方式详见此方法  
@@ -75,7 +74,8 @@ public class LoginController {
         //验证是否登录成功  
         if(subject.isAuthenticated()){  
             //System.out.println("用户[" + username + "]登录认证通过(这里可以进行一些认证通过后的一些系统参数初始化操作)");  
-        	user = userService.getUserByName(userName);
+        	user = (User) subject.getSession().getAttribute("user");
+        	//user = userService.getUserByName(userName);
         }else{  
             token.clear(); 
             return "redirect:/tologin";
@@ -83,9 +83,9 @@ public class LoginController {
 		
 		model.addAttribute("user", user);
 		request.getSession().setAttribute("user", user);
-		if (user != null && userName.equals("admin")) {
-			return "index";
-		}
+//		if (user != null && !userName.equals("admin")) {
+//			return "index";
+//		}
 		return "redirect:/index3";
 	}
 

@@ -77,6 +77,12 @@ public class UserServiceImpl implements UserService {
 		return userDao.getUserRoleById(id);
 	}
 
+	@Override
+	public User getUserRolePerByUserName(String userName) {
+		// TODO Auto-generated method stub
+		return userDao.getUserRolePerByUserName(userName);
+	}
+
 //	@Override
 //	public int getAllUserCount() {
 //		return userDao.getAllUserCount();

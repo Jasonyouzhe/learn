@@ -203,8 +203,8 @@ public class UserController {
 	        return null;
 	     }
 	@RequestMapping(value = "/{userId}/detail", method = RequestMethod.GET)
-	public String userDetail(@PathVariable(value = "id") Integer id,Model model) {
-			User user = userService.getUserById(id);
+	public String userDetail(@PathVariable(value = "userId") String id,Model model) {
+			User user = userService.getUserById(Integer.parseInt(id));
 			if (user!=null) {
 				 model.addAttribute("user",user);
 		}

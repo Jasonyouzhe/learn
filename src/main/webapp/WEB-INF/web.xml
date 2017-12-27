@@ -9,14 +9,18 @@
 		<filter-name>shiroFilter</filter-name>
 		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
 		<!-- 设置为true有servlet容器控制filter声明周期 -->
-		<init-param>
+ 		<init-param>
 			<param-name>targetFilterLifecycle</param-name>
 			<param-value>true</param-value>
 		</init-param>
 	</filter>
 	<filter-mapping>
 		<filter-name>shiroFilter</filter-name>
-		<url-pattern>/</url-pattern>
+		<url-pattern>/*</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+		<dispatcher>ERROR</dispatcher>
 	</filter-mapping>
 
 	<listener>

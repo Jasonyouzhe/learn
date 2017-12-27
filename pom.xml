@@ -171,6 +171,12 @@
 		    <version>4.0.0</version>
 		</dependency>
 		<!-- shrio  start-->
+		<!-- https://mvnrepository.com/artifact/net.mingsoft/shiro-freemarker-tags -->
+		 <dependency>
+		    <groupId>net.mingsoft</groupId>
+		    <artifactId>shiro-freemarker-tags</artifactId>
+		    <version>0.1</version>
+		 </dependency>
 		 <dependency>  
 		    <groupId>org.apache.shiro</groupId>  
 		    <artifactId>shiro-core</artifactId>  

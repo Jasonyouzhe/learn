@@ -39,7 +39,8 @@ public class MyRealm extends AuthorizingRealm {
 		List<String> roleList = new ArrayList<String>();
 		List<String> permissionList = new ArrayList<String>();
 		// 从数据库中获取当前登录用户的详细信息
-		User user = userService.getUserByName(currentUsername);
+//		User user = userService.getUserByName(currentUsername);
+		User user = userService.getUserRolePerByUserName(currentUsername);
 		if (null != user) {
 			// 实体类User中包含有用户角色的实体类信息
 			if (null != user.getRoles() && user.getRoles().size() > 0) {
@@ -64,7 +65,7 @@ public class MyRealm extends AuthorizingRealm {
 		SimpleAuthorizationInfo simpleAuthorInfo = new SimpleAuthorizationInfo();
 		simpleAuthorInfo.addRoles(roleList);
 		simpleAuthorInfo.addStringPermissions(permissionList);
-		return null;
+		return simpleAuthorInfo;
 	}
 
 	/**
@@ -74,11 +75,10 @@ public class MyRealm extends AuthorizingRealm {
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authcToken)
 			throws AuthenticationException {
 		UsernamePasswordToken token = (UsernamePasswordToken) authcToken;
-		// User user = userService.getUserByName(userName, password);
 		User user = userService.getUserByName(token.getUsername());
 		if (null != user) {
 			AuthenticationInfo authcInfo = new SimpleAuthenticationInfo(user.getUserName(), user.getPassword(),
-					user.getUserId());
+					getName());
 			this.setSession("user", user);
 			return authcInfo;
 		} else {

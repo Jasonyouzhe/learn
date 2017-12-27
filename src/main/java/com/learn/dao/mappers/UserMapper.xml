@@ -19,27 +19,46 @@
 	<!-- get userRole start 20171216-->
 	<resultMap type="com.learn.model.User" id="resultUserRole">
 		<id property="id" column="id" />
+		<result property="userId" column="user_id" />
 		<result property="userName" column="user_name" />
-		<collection property="roles" column="id" javaType="java.util.ArrayList"
-		ofType="com.learn.model.Role" select="com.learn.dao.mappers.UserMapper.getUserRoleById"/>
+		<collection property="roles" column="user_name" javaType="java.util.ArrayList"
+		 select="getUserRoleById">
+		</collection>
+		 <!-- 这种配置也可以他的sql比较长，适合一对多上面collection比较适合多对多， -->
+		 <!-- <collection property="roles" ofType="com.learn.model.Role">
+			<id property="id" column="id" />
+			<result property="roleName" column="role_name" />
+			<result property="roleDescription" column="role_description" />
+         </collection> -->
 	</resultMap>
 	
 	<resultMap type="com.learn.model.Role" id="resultRoleMap">
 		<id property="id" column="id" />
 		<result property="roleName" column="role_name" />
 		<result property="roleDescription" column="role_description" />
+			<collection property="permissions" ofType="com.learn.model.Permissions">
+		 		<id property="id" column="id" />
+				<result property="permissionsName" column="permissions_name" />
+				<result property="permissionsDescription" column="permissions_description" />
+		 	</collection>
 	</resultMap>
 	
-	<select id="getUserByID" resultMap="resultUserRole" parameterType="java.lang.Integer" >
-	    select id,userName
-	    from t_user
-	    where id = #{id}
+	<resultMap type="com.learn.model.Permissions" id="resultPermissioinsMap">
+		<id property="id" column="id" />
+		<result property="permissionsName" column="permissions_name" />
+		<result property="permissionsDescription" column="permissions_description" />
+	</resultMap>
+	
+	<select id="getUserRolePerByUserName" resultMap="resultUserRole" parameterType="string" >
+	    select id,user_id,user_name from t_user where user_name = #{userName}
+	    <!-- 这是一对多sql -->
+	    <!-- select u.id,u.user_name,r.role_name,r.role_description from t_user u,t_role r ,t_user_role ur where u.id = ur.user_id and r.id = ur.role_id and u.id = #{id} -->
 	</select>
 
-	<select id="getUserRoleById" resultMap="resultRoleMap" parameterType="java.lang.Integer" >
-	    select r.*
-	    from t_role r ,t_user_role ur
-	    where r.id = ur.role_id and ur.user_id=#{id}
+	<select id="getUserRoleById" resultMap="resultRoleMap" parameterType="string" >
+	   select ur.role_id,r.role_name,p.permissions_name,p.permissions_description 
+	   from t_user u left join t_user_role ur on u.id= ur.user_id left join t_role r on r.id= ur.role_id left join t_role_permissions rp on ur.id=rp.role_id left join t_permissions p on rp.permissions_id = p.id 
+	   where u.user_name=#{user_name}
 	</select>
 	<!-- get userRole end 20171226-->
 	
@@ -58,14 +77,14 @@
 		update t_user set
 		user_name=#{userName} , password=#{password}, photo_path=#{photoPath} where id=#{id}
 	</update>
-	<select id="getUserById" parameterType="Integer" resultMap="userMap">
-		select * from t_user where id=#{id}
-	</select>
 	<update id ="uploadPhoto" parameterType="com.learn.model.User">
 		update t_user set
 		photo_path=#{photoPath} where id=#{id}
 	</update>
 	<select id="getUserByName" parameterType="string" resultMap="userMap">
 		select * from t_user where user_name=#{userName}
+	</select>
+	<select id="getUserById" parameterType="Integer" resultMap="userMap">
+		select * from t_user where id=#{id}
 	</select>
 </mapper>  
