@@ -83,7 +83,10 @@
     <div id="sidebar">
         <ul>
             <li class="submenu active">
-                <a href="#"><span>个人主页</span></a> 
+                <a href="#"><span>
+                <@shiro.user>  
+    				欢迎[<@shiro.principal />] 
+   				 </@shiro.user></span></a> 
             </li>
             <li class="submenu"> 
                 <a href="#"><span>video</span></a>
@@ -119,7 +122,7 @@
 				</div>
 			</div>
 			<!-- video list start-->
- 			<div id="ext" style="float:left">
+ 			<div id="ext" style="float:left">   
 				<#if fileList??>
 					<#list fileList as file>
 						<div>
@@ -246,7 +249,7 @@
        });
 	
  	  
- 	   var spread = new GC.Spread.Sheets.Workbook($('#ss')[0], { sheetCount: 1 });
+ 	   //var spread = new GC.Spread.Sheets.Workbook($('#ss')[0], { sheetCount: 1 });
  	   // get spread object
  	   // var spread = $('#ss').data('workbook');
 });

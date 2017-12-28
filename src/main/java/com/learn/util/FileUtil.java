@@ -86,4 +86,11 @@ public class FileUtil {
 			e.printStackTrace(); 
 		} 
 	}
+	
+	public static void deleteAll(File file) {
+		File[] files = file.listFiles();
+		for (int i = 0; i < files.length; i++) {
+			files[i].delete();
+		}
+	}
 }

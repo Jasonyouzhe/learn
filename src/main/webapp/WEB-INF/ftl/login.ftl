@@ -4,8 +4,9 @@
 <head>
 <base id="base" href="${base}">
 <meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<title>register</title>
+<title>Login</title>
 	<link href="${base}/resources/plugins/fontsverity/css/bootstrap.min.css" rel="stylesheet">
     <link href="${base}/resources/plugins/fontsverity/css/gloab.css" rel="stylesheet">
 	<link href="${base}/resources/plugins/fontsverity/css/index.css" rel="stylesheet">
@@ -32,9 +33,6 @@
 	                            <span class="ie8 icon-close close hide"></span>
 	                            <label class="icon-sucessfill blank hide"></label>
 	                            <label class="focus valid"></label>
-	                            <#if val??>
-	                    			<label class="focus valid">用户不存在</label>
-	                   			 </#if>
 	                        </div>
 	                    </div>
 	                    <!-- <div class="item col-xs-12">
@@ -58,25 +56,26 @@
 	                        </div>
 	                    </div>
 	                    <div class="item col-xs-12">
+	                     
 	                        <span class="intelligent-label f-fl"><b class="ftx04">*</b>验证码：</span>    
 	                        <div class="f-fl item-ifo">
-	                            <input type="text" maxlength="4" class="txt03 f-r3 f-fl required" tabindex="4" style="width:167px" id="randCode" data-valid="isNonEmpty" data-error="验证码不能为空" /> 
+	                            <input type="text" name="code" maxlength="10" class="txt03 f-r3 f-fl required" tabindex="4" style="width:167px" id="randCode" data-valid="isNonEmpty" data-error="验证码不能为空" /> 
 	                            <span class="ie8 icon-close close hide"></span>
 	                            <label class="f-size12 c-999 f-fl f-pl10">
-	                            	<img src="${base}/resources/plugins/fontsverity/images/yzm.jpg" />                               
+	                            	<img id="imgObj" src="${base}/files/img/code.jpg" />                             
 	                            </label>                        
 	                            <label class="icon-sucessfill blank hide" style="left:380px"></label>
-	                            <label class="focusa">看不清？<a href="javascript:;" class="c-blue">换一张</a></label>   
+	                            <label class="focusa">看不清？<a id="veritycode" class="c-blue">换一张</a></label>   
 	                            <label class="focus valid" style="left:370px"></label>                        
 	                        </div>
 	                    </div>
 	                    <div class="item col-xs-12">
 	                        <span class="intelligent-label f-fl">&nbsp;</span>    
 	                        <div class="f-fl item-ifo" style="float:left;width:200px">
-	                        	<input type="button" id="loginBtn" class="btn" style="width:80px;" value="Sign in"/>                       
+	                        	<input type="button" id="loginBtn" class="btn" style="width:80px;" value="登录"/>                       
 	                        </div>
 	                        <div class="f-fl item-ifo" style="float:right">
-	                           <input type="button" id="registerBtn" class="btn" style="width:80px;" value="Sign up"/>                       
+	                           <input type="button" id="registerBtn" class="btn" style="width:80px;" value="去注册"/>                       
 	                        </div>
 	                    </div> 
 	                    <input type="hidden" name="f" value="signin">
@@ -99,7 +98,40 @@ $(function(){
 	$("#registerBtn").click(function(){	
 		window.location.href=BASE_URL+"/toregister";
 	});
+	
+	//get code
+    $('#veritycode').click(function(){
+        $.ajax({
+            type: "GET",
+            url: BASE_URL+"/getCode",
+            contentType: "application/x-www-form-urlencoded; charset=utf-8",
+            dataType: "text",
+            success: function(data){
+            	console.log(data);
+            	var imgSrc = $("#imgObj");
+            	imgSrc.attr("src", "");   //清空resText里面的所有内容   
+                imgSrc.attr("src", BASE_URL+data);
+             }
+        });
+   });
 });
+</script>
+
+<script type="text/javascript">
+BASE_URL = $("#base").attr("href");
+$.ajax({
+    type: "GET",
+    url: BASE_URL+"/getCode",
+    contentType: "application/x-www-form-urlencoded; charset=utf-8",
+    dataType: "text",
+    success: function(data){
+    	console.log(data);
+    	var imgSrc = $("#imgObj");
+    	imgSrc.attr("src", "");   //清空resText里面的所有内容   
+        imgSrc.attr("src", BASE_URL+data);
+     }
+});
+
 </script>
 </body>
 </html>

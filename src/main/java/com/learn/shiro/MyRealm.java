@@ -31,6 +31,8 @@ public class MyRealm extends AuthorizingRealm {
 
 	/**
 	 * 授权信息
+	 * http://www.sojson.com/blog/143.html
+	 * http://blog.csdn.net/clj198606061111/article/details/24185023
 	 */
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {

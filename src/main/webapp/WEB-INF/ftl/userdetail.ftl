@@ -111,6 +111,10 @@
 					class="icon-home"></i> User Detail</a>
 			</div>
 		</div>
+		 			用户[<@shiro.principal/>]hello
+ 			    <@shiro.hasPermission name="user:update">  
+    				用户[<@shiro.principal/>]拥有user:update权限
+    			</@shiro.hasPermission> 
 		<div class="container-fluid">
 			<div class="row-fluid">
 				<div class="span6">
@@ -141,6 +145,12 @@
 										value="${user.password}" />
 								</div>
 							</div>
+							<@shiro.hasPermission name="user:update">  
+    							用户[<@shiro.principal/>]拥有
+								<div class="form-actions">
+									<button type="submit" class="btn btn-success">Save</button>
+								</div>权限
+    						</@shiro.hasPermission> 
 							<@shiro.hasAnyRoles name="admin,manage"> 
 								<div class="form-actions">
 									<button type="submit" class="btn btn-success">Save</button>

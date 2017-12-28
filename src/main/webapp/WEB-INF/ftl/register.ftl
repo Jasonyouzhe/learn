@@ -72,19 +72,6 @@
 	                            <label class="focus valid"></label>                          
 	                        </div>
 	                    </div>
-	                    <div class="item col-xs-12">
-	                        <span class="intelligent-label f-fl"><b class="ftx04">*</b>验证码：</span>    
-	                        <div class="f-fl item-ifo">
-	                            <input type="text" maxlength="4" class="txt03 f-r3 f-fl required" tabindex="4" style="width:167px" id="randCode" data-valid="isNonEmpty" data-error="验证码不能为空" /> 
-	                            <span class="ie8 icon-close close hide"></span>
-	                            <label class="f-size12 c-999 f-fl f-pl10">
-	                            	<img src="${base}/resources/plugins/fontsverity/images/yzm.jpg" />                               
-	                            </label>                        
-	                            <label class="icon-sucessfill blank hide" style="left:380px"></label>
-	                            <label class="focusa">看不清？<a href="javascript:;" class="c-blue">换一张</a></label>   
-	                            <label class="focus valid" style="left:370px"></label>                        
-	                        </div>
-	                    </div>
 	                    <div class="item col-xs-12" style="height:auto">
 	                        <span class="intelligent-label f-fl">&nbsp;</span>  
 	                        <p class="f-size14 required"  data-valid="isChecked" data-error="请先同意条款"> 
@@ -95,10 +82,10 @@
 	                    <div class="item col-xs-12">
 	                        <span class="intelligent-label f-fl">&nbsp;</span>    
 	                        <div class="f-fl item-ifo" style="float:left;width:200px">
-	                        	<input type="button" id="registerBtn" class="btn" style="width:80px;" value="Sign up"/>                       
+	                        	<input type="button" id="registerBtn" class="btn" style="width:80px;" value="注册"/>                       
 	                        </div>
 	                        <div class="f-fl item-ifo" style="float:right">
-	                           <input type="button" id ="loginBtn" class="btn" style="width:80px;" value="Sign in"/>                       
+	                           <input type="button" id ="loginBtn" class="btn" style="width:80px;" value="返回登录"/>                       
 	                        </div>
 	                    </div> 
 	                 </form>
