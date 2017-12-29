@@ -72,6 +72,21 @@
 	                            <label class="focus valid"></label>                          
 	                        </div>
 	                    </div>
+	                    
+	                    <div class="item col-xs-12">
+	                        <span class="intelligent-label f-fl"><b class="ftx04">*</b>验证码：</span>    
+	                        <div class="f-fl item-ifo">
+	                            <input type="text" name="code" maxlength="10" class="txt03 f-r3 f-fl required" tabindex="4" style="width:167px" id="code" data-valid="isNonEmpty" data-error="验证码不能为空" /> 
+	                            <span class="ie8 icon-close close hide"></span>
+	                            <label class="f-size12 c-999 f-fl f-pl10">
+	                            	<img id="imgObj" src="${base}/files/img/code.jpg" />                             
+	                            </label>                        
+	                            <label class="icon-sucessfill blank hide" id="codehide" style="left:380px"></label>
+	                            <label class="focusa">看不清？<a id="veritycode" class="c-blue">换一张</a></label>   
+	                            <label class="focus valid" style="left:370px" id="codeLable"></label>                        
+	                        </div>
+	                    </div>
+	                    
 	                    <div class="item col-xs-12" style="height:auto">
 	                        <span class="intelligent-label f-fl">&nbsp;</span>  
 	                        <p class="f-size14 required"  data-valid="isChecked" data-error="请先同意条款"> 
@@ -115,23 +130,42 @@ $(function(){
 	BASE_URL = $("#base").attr("href");
 	//第一页的确定按钮
 	$("#registerBtn").click(function(){	
+		$("#codeLable").text("");
 		username = $("#username").val();
 		password = $("#password").val();
 		if(!verifyCheck._click()) return;
-		$(".part1").hide();
-		$(".part2").show();
-		$(".step li").eq(1).addClass("on");
-		console.log($("#password").val())
-		//$("#registerform").submit();
-		countdown({
-			maxTime:5,
-			ing:function(c){
-				$("#times").text(c);
-			},
-			after:function(){
-				window.location.href=BASE_URL+"/login?username="+username+"&password="+password+"&f=register";		
-			}
-		});	
+		//checkCode
+		$.ajax({
+		    type: "GET",
+		    url: BASE_URL+"/checkCode",
+		    contentType: "application/x-www-form-urlencoded; charset=utf-8",
+		    data:{"code":$("#code").val()},
+		    dataType: "text",
+		    success: function(data){
+		    	console.log(data);
+		    	if (data=="false"){
+		    		$("#codeLable").text("验证码错误");
+		    		$("#codehide").addClass("hide");
+		    		return;
+		    	}else{
+		 			//submit	
+		    		$(".part1").hide();
+		    		$(".part2").show();
+		    		$(".step li").eq(1).addClass("on");
+		    		console.log($("#password").val())
+		    		//$("#registerform").submit();
+		    		countdown({
+		    			maxTime:5,
+		    			ing:function(c){
+		    				$("#times").text(c);
+		    			},
+		    			after:function(){
+		    				window.location.href=BASE_URL+"/login?username="+username+"&password="+password+"&f=register";		
+		    			}
+		    		});	
+		    	}
+		     }
+		});
 	});
 	$("#loginBtn").click(function(){	
 		window.location.href=BASE_URL+"/tologin";
@@ -141,6 +175,39 @@ function showoutc(){$(".m-sPopBg,.m-sPopCon").show();}
 function closeClause(){
 	$(".m-sPopBg,.m-sPopCon").hide();		
 }
+
+//get code
+$('#veritycode').click(function(){
+    $.ajax({
+        type: "GET",
+        url: BASE_URL+"/getCode",
+        contentType: "application/x-www-form-urlencoded; charset=utf-8",
+        dataType: "text",
+        success: function(data){
+        	console.log(data);
+        	var imgSrc = $("#imgObj");
+        	imgSrc.attr("src", "");   //清空resText里面的所有内容   
+            imgSrc.attr("src", BASE_URL+data);
+         }
+    });
+});
 </script>
+
+<script type="text/javascript">
+BASE_URL = $("#base").attr("href");
+$.ajax({
+    type: "GET",
+    url: BASE_URL+"/getCode",
+    contentType: "application/x-www-form-urlencoded; charset=utf-8",
+    dataType: "text",
+    success: function(data){
+    	console.log(data);
+    	var imgSrc = $("#imgObj");
+    	imgSrc.attr("src", "");   //清空resText里面的所有内容   
+        imgSrc.attr("src", BASE_URL+data);
+     }
+});
+</script>
+
 </body>
 </html>

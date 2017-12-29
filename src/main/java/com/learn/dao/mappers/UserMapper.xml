@@ -63,7 +63,7 @@
 	<!-- get userRole end 20171226-->
 	
 	<!-- 这里的id就是接口中方法的名称 -->
-	<insert id="saveUser" parameterType="com.learn.model.User">
+	<insert id="saveUser" parameterType="com.learn.model.User" useGeneratedKeys="true" keyProperty="id">
 		insert into t_user(user_id,user_name,password)values(#{userId},#{userName},#{password})
 	</insert>
 	<select id="getAllUser" resultMap="userMap">

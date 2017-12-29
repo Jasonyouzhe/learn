@@ -12,12 +12,8 @@
     <link rel="stylesheet" href="${base}/resources/css/matrix-media.css" />
     <link href="${base}/resources/font-awesome/css/font-awesome.css" rel="stylesheet" />
 	<link rel="stylesheet" type="text/css" href="${base}/resources/plugins/webuploader/webuploader.css">
-	<%-- <link href='${base}/resources/plugins/sheets/gc.spread.sheets.10.2.0.css' rel='stylesheet' type='text/css'/> --%>
+	<!-- <link href='${base}/resources/plugins/sheets/gc.spread.sheets.10.2.0.css' rel='stylesheet' type='text/css'/> -->
 	<style>
-		/* #ext img{
-			width: 150px; 
-			height: 120px;
-		} */
 		#ext div{
 			float: left;
 			width: 33%; 
@@ -97,9 +93,11 @@
             <li class="submenu"> 
                 <a href="#"><span>others</span></a>
             </li>
-            <li class="submenu"> 
-                <a href="#"><span>error</span></a>
+            <@shiro.hasAnyRoles name="admin,manage"> 
+            <li> 
+                <a href="${base}/user/userlist"><span>manage user</span></a>
             </li>
+           </@shiro.hasAnyRoles>
         </ul>
     </div>
     <!--sidebar-menu-->

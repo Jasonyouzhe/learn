@@ -59,14 +59,14 @@
 	                     
 	                        <span class="intelligent-label f-fl"><b class="ftx04">*</b>验证码：</span>    
 	                        <div class="f-fl item-ifo">
-	                            <input type="text" name="code" maxlength="10" class="txt03 f-r3 f-fl required" tabindex="4" style="width:167px" id="randCode" data-valid="isNonEmpty" data-error="验证码不能为空" /> 
+	                            <input type="text" name="code" maxlength="10" class="txt03 f-r3 f-fl required" tabindex="4" style="width:167px" id="code" data-valid="isNonEmpty" data-error="验证码不能为空" /> 
 	                            <span class="ie8 icon-close close hide"></span>
 	                            <label class="f-size12 c-999 f-fl f-pl10">
 	                            	<img id="imgObj" src="${base}/files/img/code.jpg" />                             
 	                            </label>                        
-	                            <label class="icon-sucessfill blank hide" style="left:380px"></label>
+	                            <label class="icon-sucessfill blank hide" id="codehide" style="left:380px"></label>
 	                            <label class="focusa">看不清？<a id="veritycode" class="c-blue">换一张</a></label>   
-	                            <label class="focus valid" style="left:370px"></label>                        
+	                            <label class="focus valid" style="left:370px" id="codeLable"></label>                        
 	                        </div>
 	                    </div>
 	                    <div class="item col-xs-12">
@@ -88,12 +88,32 @@
 <script src="${base}/resources/js/jquery-1.11.2.min.js"></script> 
 <script src="${base}/resources/plugins/fontsverity/js/register.js"></script>
 <script>
+$("#codeLable").text("");
 $(function(){
 	BASE_URL = $("#base").attr("href");
 	//第一页的确定按钮
-	$("#loginBtn").click(function(){	
+	$("#loginBtn").click(function(){
+		$("#codeLable").text("");
 		if(!verifyCheck._click()) return;
-		$("#loginForm").submit();
+		//checkCode
+		$.ajax({
+		    type: "GET",
+		    url: BASE_URL+"/checkCode",
+		    contentType: "application/x-www-form-urlencoded; charset=utf-8",
+		    data:{"code":$("#code").val()},
+		    dataType: "text",
+		    success: function(data){
+		    	console.log(data);
+		    	if (data=="false"){
+		    		$("#codeLable").text("验证码错误");
+		    		$("#codehide").addClass("hide");
+		    		return;
+		    	}else{
+		    		$("#loginForm").submit();
+		    	}
+		     }
+		});
+
 	});
 	$("#registerBtn").click(function(){	
 		window.location.href=BASE_URL+"/toregister";
@@ -131,7 +151,6 @@ $.ajax({
         imgSrc.attr("src", BASE_URL+data);
      }
 });
-
 </script>
 </body>
 </html>

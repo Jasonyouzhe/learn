@@ -3,7 +3,14 @@ package com.learn.model;
 public class UserRole {
 	private Integer id;
 	private String userId;
-	private String roleId;
+	private String roleId = "3";
+
+	
+	public UserRole(String userId, String roleId) {
+		super();
+		this.userId = userId;
+		this.roleId = roleId;
+	}
 
 	public Integer getId() {
 		return id;

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace的值就是dao接口的完整路劲，就这个demo而言namespace 就是userDao.java的完整路劲 -->
+<mapper namespace="com.learn.dao.RoleDao">
+	<!--通过<resultMap>映射实体类属性名和表的字段名对应关系 -->
+	<resultMap type="com.learn.model.UserRole" id="userRoleMap">
+		<!-- 用id属性来映射主键字段 -->
+		<id property="id" column="id" />
+		<!-- 用result属性来映射非主键字段 -->
+		<result property="userId" column="user_id" />
+		<result property="roleId" column="role_id" />
+	</resultMap>
+	
+	<!-- 这里的id就是接口中方法的名称 -->
+	<insert id="saveRole" parameterType="com.learn.model.UserRole">
+		insert into t_user_role(user_id,role_id)values(#{userId},#{roleId})
+	</insert>
+</mapper>  
