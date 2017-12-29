@@ -17,11 +17,9 @@ public interface UserDao {
 	public int updateUserById(User user);
 	public User getUserById(Integer id);
 	public int uploadPhoto(User user);
-//	public int getAllUserCount();
-//	public List<User> findPages(@Param(value="startPos")Integer startPos, @Param(value="pageSize")Integer pageSize);
 	public User getUserByName(@Param(value="userName")String userName);
 	
-	@Select("SELECT user_id as userId FROM t_user ORDER BY user_id desc limit 1")
+	@Select("SELECT user_id as userId FROM t_user ORDER BY id desc limit 1")
 	public String getUserId();
 	public Role getUserRoleById(Integer id);
 	public User getUserRolePerByUserName(String userName);

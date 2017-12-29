@@ -12,8 +12,6 @@ public interface UserService {
 	public int updateUserById(User user);
 	public User getUserById(Integer id);
 	public int uploadPhoto(User user);
-//	public int getAllUserCount();
-//	public List<User> findPages(int startPos, int pageSize);
 	public User getUserByName(String userName);
 	public String getUserId();
 	public Role getUserRoleById(Integer id);
