@@ -69,7 +69,7 @@ CREATE TABLE `t_permissions` (
 
 LOCK TABLES `t_permissions` WRITE;
 /*!40000 ALTER TABLE `t_permissions` DISABLE KEYS */;
-INSERT INTO `t_permissions` VALUES (1,'create','创建'),(2,'delete','删除'),(3,'update','更新'),(4,'select','查询');
+INSERT INTO `t_permissions` VALUES (1,'user:create','创建'),(2,'user:delete','删除'),(3,'user:update','更新'),(4,'user:select','查询');
 /*!40000 ALTER TABLE `t_permissions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -139,7 +139,7 @@ CREATE TABLE `t_user` (
   `photo_path` varchar(45) DEFAULT NULL,
   `user_dzone` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -148,7 +148,7 @@ CREATE TABLE `t_user` (
 
 LOCK TABLES `t_user` WRITE;
 /*!40000 ALTER TABLE `t_user` DISABLE KEYS */;
-INSERT INTO `t_user` VALUES (1,'No.1','admin','123','../resources/image/photo.jpg',0),(2,'No.2','jason','123',NULL,0),(3,'No.3','jack','123',NULL,0),(6,'No.4','june','123qwe',NULL,0),(8,'No.5','app','123qwe',NULL,0);
+INSERT INTO `t_user` VALUES (1,'No.1','admin','123','../resources/image/photo.jpg',0),(2,'No.2','jason','123',NULL,0),(3,'No.3','jack','123',NULL,0),(6,'No.4','june','123qwe',NULL,0),(8,'No.5','app','123qwe',NULL,0),(12,'No.6','babay','123qwe',NULL,0),(13,'No.7','dav','123qwe',NULL,0),(14,'No.8','tony','123qwe',NULL,0),(15,'No.9','grren','123qwe',NULL,0),(16,'No.10','user','123qwe',NULL,0),(17,'No.10','hony','123qwe',NULL,0),(18,'No.10','teer','123qwe',NULL,1),(19,'No.10','tom','123qwe',NULL,0),(20,'No.11','keer','123qwe',NULL,0),(21,'No.12','张三123','123qwe',NULL,0);
 /*!40000 ALTER TABLE `t_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -162,9 +162,9 @@ DROP TABLE IF EXISTS `t_user_role`;
 CREATE TABLE `t_user_role` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` varchar(45) NOT NULL,
-  `role_id` varchar(45) NOT NULL,
+  `role_id` varchar(45) NOT NULL DEFAULT '3',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -173,7 +173,7 @@ CREATE TABLE `t_user_role` (
 
 LOCK TABLES `t_user_role` WRITE;
 /*!40000 ALTER TABLE `t_user_role` DISABLE KEYS */;
-INSERT INTO `t_user_role` VALUES (1,'1','1'),(2,'2','2'),(3,'3','3'),(4,'6','3'),(5,'8','3');
+INSERT INTO `t_user_role` VALUES (1,'1','1'),(2,'2','2'),(3,'3','3'),(4,'6','3'),(5,'8','3'),(8,'12','3'),(9,'13','3'),(10,'14','3'),(11,'15','3'),(12,'16','3'),(13,'17','3'),(14,'18','3'),(15,'19','3'),(16,'20','3'),(17,'21','3');
 /*!40000 ALTER TABLE `t_user_role` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -186,4 +186,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-12-26 17:31:34
+-- Dump completed on 2017-12-29 15:44:57

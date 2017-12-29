@@ -16,6 +16,27 @@
 		<result property="userDzone" column="user_dzone" />
 	</resultMap>
 	
+	<resultMap type="com.learn.model.User" id="userRolePerMap">
+		<!-- 用id属性来映射主键字段 -->
+		<id property="id" column="id" />
+		<!-- 用result属性来映射非主键字段 -->
+		<result property="userId" column="user_id" />
+		<result property="userName" column="user_name" />
+		<result property="password" column="password" />
+		<result property="photoPath" column="photo_path" />
+		<result property="userDzone" column="user_dzone" />
+		<collection property="roles" ofType="com.learn.model.Role">
+			<id property="id" column="id" />
+			<result property="roleName" column="role_name" />
+			<result property="roleDescription" column="role_description" />
+			<collection property="permissions" ofType="com.learn.model.Permissions">
+		 		<id property="id" column="id" />
+				<result property="permissionsName" column="permissions_name" />
+				<result property="permissionsDescription" column="permissions_description" />
+		 	</collection>
+         </collection>
+	</resultMap>
+	
 	<!-- get userRole start 20171216-->
 	<resultMap type="com.learn.model.User" id="resultUserRole">
 		<id property="id" column="id" />
@@ -24,12 +45,6 @@
 		<collection property="roles" column="user_name" javaType="java.util.ArrayList"
 		 select="getUserRoleById">
 		</collection>
-		 <!-- 这种配置也可以他的sql比较长，适合一对多上面collection比较适合多对多， -->
-		 <!-- <collection property="roles" ofType="com.learn.model.Role">
-			<id property="id" column="id" />
-			<result property="roleName" column="role_name" />
-			<result property="roleDescription" column="role_description" />
-         </collection> -->
 	</resultMap>
 	
 	<resultMap type="com.learn.model.Role" id="resultRoleMap">
@@ -66,9 +81,29 @@
 	<insert id="saveUser" parameterType="com.learn.model.User" useGeneratedKeys="true" keyProperty="id">
 		insert into t_user(user_id,user_name,password)values(#{userId},#{userName},#{password})
 	</insert>
-	<select id="getAllUser" resultMap="userMap">
-		select * from t_user
+	<select id="getAllUser" resultMap="userRolePerMap">
+		SELECT 
+		    u.id,
+		    u.user_id,
+		    u.user_name,
+		    r.id,
+		    r.role_name,
+		    r.role_description,
+		    p.id,
+		    p.permissions_name,
+		    p.permissions_description
+		FROM
+		    t_user u
+		        LEFT JOIN
+		    t_user_role ur ON u.id = ur.user_id
+		        LEFT JOIN
+		    t_role r ON r.id = ur.role_id
+		        LEFT JOIN
+		    t_role_permissions rp ON r.id = rp.role_id
+		        LEFT JOIN
+		    t_permissions p ON rp.permissions_id = p.id
 	</select>
+	
 	<delete id="delUserById" parameterType="Integer">
 		delete from t_user where
 		id = #{id}

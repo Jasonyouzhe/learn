@@ -17,7 +17,7 @@
 	<style>
 	</style>
 </head>
-<body>
+<body style="height:900px">
     <!--Header-part-->
     <div id="header">
       <h1><a href="dashboard.html">信息管理系统平台</a></h1>
@@ -100,7 +100,7 @@
     <!--sidebar-menu-->
 
     <!--main-container-part-->
-    <div id="content">
+    <div id="content" style="width:auto;height:120px; overflow-y:scroll; border:1px solid;">
         <!--breadcrumbs-->
         <div id="content-header">
           <div id="breadcrumb"> <a href="index.html" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a></div>
@@ -117,6 +117,8 @@
                   <th>userNo</th>
                   <th>username</th>
                   <th>userstatus</th>
+                  <th>roles</th>
+                  <th>permissions</th>
                 </tr>
               </thead>
               <tbody>
@@ -124,13 +126,39 @@
               		<#list userList as user>
 						<tr>
 						     <td>${user.userId }</td>
-			                  <td>${user.userName }</td>
-			                  <#if user.userDzone==0>
+			                 <td>${user.userName }</td>
+			                 <#if user.userDzone==0>
 			                  	<td class="center">正常</td>
-			                  <#else> 
+			                 <#else> 
 			                  	<td class="center">冻结</td>
-			                  </#if>
-						  </tr>
+			                 </#if>
+			                 <td>
+				                 <div class="control-group">
+						         <div class="controls">	
+					                 <#list user.roles as role>
+						                  <label>
+						                  <input type="checkbox" name="roleName" />
+						                  ${role.roleName }
+						                  </label>
+							         </#list>
+						         </div>
+						         </div>	
+			                 </td>
+			                 <td>
+				                 <div class="control-group">
+						         <div class="controls">	
+					                 <#list user.roles as role>
+					                 	<#list role.permissions as permission>
+							                  <label>
+							                  <input type="checkbox" name="permissionName" />
+							                  ${permission.permissionsName }
+							                  </label>
+						                  </#list>
+							         </#list>
+						         </div>
+						         </div>	
+			                 </td>
+						 </tr>
 					</#list>
               </#if>
               </tbody>
@@ -160,7 +188,8 @@
 <script src="${base}/resources/js/select2.min.js"></script> 
 <script src="${base}/resources/js/jquery.dataTables.min.js"></script> 
 <script src="${base}/resources/js/matrix.tables.js"></script>
-
+<script src="${base}/resources/js/matrix.form_common.js"></script>
+<script src="${base}/resources/js/nicescroll/jquery.nicescroll.min.js"></script> 
 <script type="text/javascript">
 $(document).ready(function(){
 	BASE_URL = $("#base").attr("href");
