@@ -26,11 +26,9 @@
 		<result property="photoPath" column="photo_path" />
 		<result property="userDzone" column="user_dzone" />
 		<collection property="roles" ofType="com.learn.model.Role">
-			<id property="id" column="id" />
 			<result property="roleName" column="role_name" />
 			<result property="roleDescription" column="role_description" />
 			<collection property="permissions" ofType="com.learn.model.Permissions">
-		 		<id property="id" column="id" />
 				<result property="permissionsName" column="permissions_name" />
 				<result property="permissionsDescription" column="permissions_description" />
 		 	</collection>
@@ -71,9 +69,23 @@
 	</select>
 
 	<select id="getUserRoleById" resultMap="resultRoleMap" parameterType="string" >
-	   select ur.role_id,r.role_name,p.permissions_name,p.permissions_description 
-	   from t_user u left join t_user_role ur on u.id= ur.user_id left join t_role r on r.id= ur.role_id left join t_role_permissions rp on ur.id=rp.role_id left join t_permissions p on rp.permissions_id = p.id 
-	   where u.user_name=#{user_name}
+		SELECT 
+		    ur.role_id,
+		    r.role_name,
+		    p.permissions_name,
+		    p.permissions_description
+		FROM
+		    t_user u
+		        LEFT JOIN
+		    t_user_role ur ON u.id = ur.user_id
+		        LEFT JOIN
+		    t_role r ON r.id = ur.role_id
+		        LEFT JOIN
+		    t_role_permissions rp ON ur.id = rp.role_id
+		        LEFT JOIN
+		    t_permissions p ON rp.permissions_id = p.id
+		WHERE
+		    u.user_name = #{user_name}
 	</select>
 	<!-- get userRole end 20171226-->
 	
@@ -86,10 +98,11 @@
 		    u.id,
 		    u.user_id,
 		    u.user_name,
-		    r.id,
+		    u.password,
+		    u.photo_path,
+		    u.user_dzone,
 		    r.role_name,
 		    r.role_description,
-		    p.id,
 		    p.permissions_name,
 		    p.permissions_description
 		FROM
