@@ -6,7 +6,6 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
-import com.learn.model.Role;
 import com.learn.model.User;
 
 @Repository
@@ -21,7 +20,6 @@ public interface UserDao {
 	
 	@Select("SELECT user_id as userId FROM t_user ORDER BY id desc limit 1")
 	public String getUserId();
-	public Role getUserRoleById(Integer id);
 	public User getUserRolePerByUserName(String userName);
 	
 }

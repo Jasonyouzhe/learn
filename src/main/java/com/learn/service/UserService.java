@@ -14,6 +14,5 @@ public interface UserService {
 	public int uploadPhoto(User user);
 	public User getUserByName(String userName);
 	public String getUserId();
-	public Role getUserRoleById(Integer id);
 	public User getUserRolePerByUserName(String userName);
 }

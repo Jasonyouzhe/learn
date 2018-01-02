@@ -26,9 +26,11 @@
 		<result property="photoPath" column="photo_path" />
 		<result property="userDzone" column="user_dzone" />
 		<collection property="roles" ofType="com.learn.model.Role">
+			<id property="id" column="role_id" />
 			<result property="roleName" column="role_name" />
 			<result property="roleDescription" column="role_description" />
 			<collection property="permissions" ofType="com.learn.model.Permissions">
+				<id property="id" column="permissions_id" />
 				<result property="permissionsName" column="permissions_name" />
 				<result property="permissionsDescription" column="permissions_description" />
 		 	</collection>
@@ -46,11 +48,11 @@
 	</resultMap>
 	
 	<resultMap type="com.learn.model.Role" id="resultRoleMap">
-		<id property="id" column="id" />
+		<id property="id" column="role_id" />
 		<result property="roleName" column="role_name" />
 		<result property="roleDescription" column="role_description" />
 			<collection property="permissions" ofType="com.learn.model.Permissions">
-		 		<id property="id" column="id" />
+		 		<id property="id" column="permissions_id" />
 				<result property="permissionsName" column="permissions_name" />
 				<result property="permissionsDescription" column="permissions_description" />
 		 	</collection>
@@ -70,8 +72,9 @@
 
 	<select id="getUserRoleById" resultMap="resultRoleMap" parameterType="string" >
 		SELECT 
-		    ur.role_id,
+		    r.id as role_id,
 		    r.role_name,
+		    p.id as permissions_id,
 		    p.permissions_name,
 		    p.permissions_description
 		FROM
@@ -101,8 +104,10 @@
 		    u.password,
 		    u.photo_path,
 		    u.user_dzone,
+		    r.id as role_id,
 		    r.role_name,
 		    r.role_description,
+		    p.id as permissions_id,
 		    p.permissions_name,
 		    p.permissions_description
 		FROM

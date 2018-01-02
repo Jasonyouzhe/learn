@@ -70,29 +70,9 @@ public class UserServiceImpl implements UserService {
 		}
 		return userNo+"";
 	}
-
-	@Override
-	public Role getUserRoleById(Integer id) {
-		
-		return userDao.getUserRoleById(id);
-	}
-
 	@Override
 	public User getUserRolePerByUserName(String userName) {
-		// TODO Auto-generated method stub
 		return userDao.getUserRolePerByUserName(userName);
 	}
-
-//	@Override
-//	public int getAllUserCount() {
-//		return userDao.getAllUserCount();
-//	}
-//
-//	@Override
-//	public List<User> findPages(int startPos, int pageSize) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-
 
 }

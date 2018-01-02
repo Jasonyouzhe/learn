@@ -12,9 +12,10 @@
 		<result property="userId" column="user_id" />
 		<result property="roleId" column="role_id" />
 	</resultMap>
-	
 	<!-- 这里的id就是接口中方法的名称 -->
 	<insert id="saveRole" parameterType="com.learn.model.UserRole">
-		insert into t_user_role(user_id,role_id)values(#{userId},#{roleId})
+		insert into
+		t_user_role(user_id,role_id)values(#{userId},#{roleId})
 	</insert>
+	
 </mapper>  

@@ -15,7 +15,7 @@ public class User implements Serializable {
 	private String password;
 	private int userDzone;
 	private List<Role> roles;
-	
+
 	public List<Role> getRoles() {
 		return roles;
 	}
