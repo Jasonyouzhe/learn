@@ -17,6 +17,7 @@ public class BasePathInterceptor extends HandlerInterceptorAdapter {
         String basePath = scheme + "://" + serverName + ":" + port + path1;
         logger.info(basePath);
         request.setAttribute("basePath", basePath);
+//        System.out.println("basePath" + basePath);
         return true;
 	}
 }

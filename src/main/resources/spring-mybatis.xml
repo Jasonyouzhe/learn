@@ -62,6 +62,13 @@
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
+	<!-- 基于注解的编程式事物管理 start -->
+	<!-- 
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+	 -->
+	<!-- 基于注解的编程式事物管理 end -->
+	
+	<!-- 基于aspectj aop的编程式事物管理 start -->
 	<!-- 配置事务通知属性 -->
 	<tx:advice id="txAdvice" transaction-manager="transactionManager">
 		<!-- 定义事务传播属性 -->
@@ -92,4 +99,5 @@
 			expression="(execution(* com.learn.service.*.*(..)))" />
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="serviceOperation" />
 	</aop:config>
+	<!-- 基于aspectj aop的编程式事物管理 start -->
 </beans>

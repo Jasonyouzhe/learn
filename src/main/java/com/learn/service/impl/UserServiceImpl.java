@@ -14,13 +14,11 @@ import com.learn.model.User;
 import com.learn.service.UserService;
 
 @Service
-@Transactional
 public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserDao userDao;
 
-	@Transactional
 	@Override
 	public void saveUser(User user) {
 		userDao.saveUser(user);
