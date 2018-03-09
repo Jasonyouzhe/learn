@@ -99,5 +99,5 @@
 			expression="(execution(* com.learn.service.*.*(..)))" />
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="serviceOperation" />
 	</aop:config>
-	<!-- 基于aspectj aop的编程式事物管理 start -->
+	<!-- 基于aspectj aop的编程式事物管理 end -->
 </beans>
