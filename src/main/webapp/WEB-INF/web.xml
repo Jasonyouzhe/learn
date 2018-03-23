@@ -28,7 +28,7 @@
 	</listener>
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>classpath:/spring-mybatis.xml,classpath:/spring-shiro.xml</param-value>
+		<param-value>classpath:/spring-mybatis.xml,classpath:/spring-shiro.xml,classpath:/spring-redis.xml</param-value>
 	</context-param>
 	<servlet>
 		<servlet-name>learn</servlet-name>

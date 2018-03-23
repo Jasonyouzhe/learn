@@ -26,9 +26,9 @@ public class ImageOCR {
         //client.setSocketProxy("proxy_host", proxy_port);  // 设置socket代理
 
         // 调用接口
-        String path = "E:\\temp\\5.jpg";
+        String path = "C:\\Users\\Jason_Zhang\\Desktop\\linefiles\\p2.png";
         JSONObject res = client.basicGeneral(path, new HashMap<String, String>());
-        System.out.println(res.toString(2));
+        System.out.println(res.toString());
 
     }
 }
