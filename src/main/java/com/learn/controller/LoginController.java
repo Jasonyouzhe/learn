@@ -27,6 +27,7 @@ import com.learn.model.UserRole;
 import com.learn.service.FilesService;
 import com.learn.service.RoleService;
 import com.learn.service.UserService;
+import com.learn.service.impl.RedisCache;
 import com.learn.util.CodeUtil;
 import com.learn.util.FileUtil;
 
@@ -41,6 +42,9 @@ public class LoginController {
 	
 	@Autowired
 	private RoleService roleService;
+	
+	@Autowired
+	private RedisCache redisCache;
 
 	/**
 	 * 
@@ -80,6 +84,8 @@ public class LoginController {
         subject.login(token);  
         System.out.println("对用户[" + userName + "]进行登录验证..验证通过"); 
         
+        redisCache.put("redisKey", "登录时用保存rediskey");
+        
         //验证是否登录成功  
         if(subject.isAuthenticated()){  
         	user = (User) subject.getSession().getAttribute("user");
@@ -94,6 +100,7 @@ public class LoginController {
 	@RequestMapping("/index3")
 	public String index3(HttpServletRequest request, Model model) throws Exception {
 		System.out.println("loading index3");
+		redisCache.get("redisKey");
 		List<Files> fileList = filesService.getAllFiles();
 		if (fileList != null && fileList.size() > 0) {
 			model.addAttribute("fileList", fileList);

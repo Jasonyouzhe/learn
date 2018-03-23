@@ -10,10 +10,9 @@
                           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
                           http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
 
-
-
 	<!-- 注册HandlerMapper、HandlerAdapter两个映射类 -->
 	<mvc:annotation-driven />
+	<context:annotation-config/>
 	<!-- 配置扫描的包 -->
 	<context:component-scan base-package="com.learn.controller" />
 	<!-- 静态资源配置 -->
@@ -112,5 +111,5 @@
 	    <!-- 对资源文件内容缓存时间，单位秒 -->
 	    <property name="cacheSeconds" value="120"/>
 	</bean>
-
+ 	
 </beans>
