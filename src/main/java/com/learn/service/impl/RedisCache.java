@@ -8,6 +8,8 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+import com.fasterxml.classmate.util.ResolvedTypeCache.Key;
+
 import java.io.*;
 
 import javax.annotation.Resource;
@@ -108,5 +110,9 @@ public class RedisCache {
             ex.printStackTrace();
         }
         return bytes;
+    }
+    
+    public void delete(String key){
+    	redisTemplate.delete(key);
     }
 }

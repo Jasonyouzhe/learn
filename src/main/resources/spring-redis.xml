@@ -21,12 +21,13 @@
         <property name="maxIdle" value="${redis.pool.maxIdle}" /> 
         <property name="maxWaitMillis" value="${redis.pool.maxWaitMillis}" /> 
         <property name="testOnBorrow" value="${redis.pool.testOnBorrow}" /> 
+        <property name="testOnReturn" value="true" />
     </bean> 
     <!-- redis单节点数据库连接配置服务中心 --> 
     <bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"> 
         <property name="hostName" value="${redis.ip}" /> 
         <property name="port" value="${redis.port}" /> 
-        <!-- <property name="password" value="${redis.pass}" /> --> 
+        <property name="password" value="${redis.password}" /> 
         <property name="poolConfig" ref="jedisPoolConfig" /> 
     </bean> 
     <!-- redisTemplate配置，redisTemplate是对Jedis的对redis操作的扩展，有更多的操作，封装使操作更便捷 --> 

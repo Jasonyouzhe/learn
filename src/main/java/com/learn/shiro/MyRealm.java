@@ -23,12 +23,15 @@ import com.learn.model.Permissions;
 import com.learn.model.Role;
 import com.learn.model.User;
 import com.learn.service.UserService;
+import com.learn.service.impl.RedisCache;
 
 public class MyRealm extends AuthorizingRealm {
 
 	@Autowired
 	UserService userService;
-
+	
+	@Autowired
+	private RedisCache redisCache;
 	/**
 	 * 授权信息
 	 * http://www.sojson.com/blog/143.html
@@ -81,7 +84,8 @@ public class MyRealm extends AuthorizingRealm {
 		if (null != user) {
 			AuthenticationInfo authcInfo = new SimpleAuthenticationInfo(user.getUserName(), user.getPassword(),
 					getName());
-			this.setSession("user", user);
+//			this.setSession("user", user);
+			redisCache.put("user", user);
 			return authcInfo;
 		} else {
 			return null;
